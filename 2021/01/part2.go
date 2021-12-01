@@ -13,29 +13,30 @@ func Part2() int {
 	s := bufio.NewScanner(bytes.NewReader(f))
 
 	var count int
+	lines := make([]int, 0, 3)
 
-	var inputs []int
-	for s.Scan() {
-		line := s.Text()
-		x, _ := strconv.Atoi(line)
-
-		inputs = append(inputs, x)
+	// read the first 3 lines
+	for i := 0; i < 3 && s.Scan(); i++ {
+		num, _ := strconv.Atoi(s.Text())
+		lines = append(lines, num)
 	}
 
-	isFirst := true
-	var prev int
-	for i := 0; i < len(inputs)-2; i++ {
-		x := sum(inputs[i : i+3]...)
+	if len(lines) < 3 {
+		panic("couldn't read 3 lines from input")
+	}
 
-		if isFirst {
-			isFirst = false
-			prev = x
-			continue
-		}
+	prev := sum(lines...)
+	for s.Scan() {
+		copy(lines, lines[1:])
+		num, _ := strconv.Atoi(s.Text())
+
+		lines[2] = num
+		x := sum(lines...)
 
 		if x > prev {
 			count++
 		}
+
 		prev = x
 	}
 
