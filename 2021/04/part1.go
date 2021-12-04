@@ -28,25 +28,7 @@ func Part1() int {
 				continue
 			}
 
-			// check row
-			won := true
-			for i := 0; i < 5; i++ {
-				if _, ok := marked[x][board[i][pos[1]]]; !ok {
-					won = false
-					break
-				}
-			}
-
-			// check column
-			won = true
-			for i := 0; i < 5; i++ {
-				if _, ok := marked[x][board[pos[0]][i]]; !ok {
-					won = false
-					break
-				}
-			}
-
-			if won {
+			if hasWon(marked[x], board, pos) {
 				var unmarkedSum int
 				for i, row := range board {
 					for j := range row {

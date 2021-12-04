@@ -47,3 +47,27 @@ func readBoard(s *bufio.Scanner) (board [][]string, index map[string][]int) {
 
 	return board, index
 }
+
+func hasWon(marked map[string]struct{}, board [][]string, pos []int) bool {
+	// check row
+	won := true
+	for i := 0; i < 5; i++ {
+		if _, ok := marked[board[i][pos[1]]]; !ok {
+			won = false
+			break
+		}
+	}
+
+	// check column
+	if !won {
+		won = true
+		for i := 0; i < 5; i++ {
+			if _, ok := marked[board[pos[0]][i]]; !ok {
+				won = false
+				break
+			}
+		}
+	}
+
+	return won
+}

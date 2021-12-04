@@ -38,27 +38,7 @@ func Part2() int {
 
 			marked[x][n] = struct{}{}
 
-			// check row
-			won := true
-			for i := 0; i < 5; i++ {
-				if _, ok := marked[x][board[i][pos[1]]]; !ok {
-					won = false
-					break
-				}
-			}
-
-			// check column
-			if !won {
-				won = true
-				for i := 0; i < 5; i++ {
-					if _, ok := marked[x][board[pos[0]][i]]; !ok {
-						won = false
-						break
-					}
-				}
-			}
-
-			if won {
+			if hasWon(marked[x], board, pos) {
 				boardsWon[x] = struct{}{}
 				var unmarkedSum int
 				for i, row := range board {
