@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import List, Set
+from typing import List
+from datetime import datetime
 
 
 def read_input(input: str) -> (List[List[bool]], List[(str, int)]):
@@ -91,11 +92,15 @@ if __name__ == '__main__':
     example = Path('./example_input.txt').read_text()
     input = Path('./input.txt').read_text()
 
-    for want_example, want_answer, fn in ((17, 693, part1), (0, 0, part2)):
+    for idx, (want_example, want_answer, fn) in enumerate([(17, 693, part1), (0, 0, part2)]):
+        start = datetime.now()
         got_example = fn(example)
         assert got_example == want_example, f"example: got {got_example}, want {want_example}"
 
+        print(f"Part{idx+1} (example): {datetime.now() - start}")
+        start = datetime.now()
         got_answer = fn(input)
         assert got_answer == want_answer, f"answer: got {got_answer}, want {want_answer}"
 
+        print(f"Part{idx+1}: {datetime.now() - start}")
         print("done!")
