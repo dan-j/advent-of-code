@@ -16,13 +16,7 @@ def read_input(input: str) -> (List[List[bool]], List[(str, int)]):
 
 
 def read_grid(lines: List[str]) -> List[List[bool]]:
-    coords: List[(int, int)] = []
-    for line in lines:
-        if line == "":
-            break
-
-        [x, y] = list(map(int, line.split(",")))
-        coords.append((x, y))
+    coords: List[(int, int)] = [tuple(map(int, line.split(","))) for line in lines]
 
     max_x = max(coords, key=lambda x: x[0])[0]
     max_y = max(coords, key=lambda y: y[1])[1]
