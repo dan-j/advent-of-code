@@ -28,12 +28,11 @@ def calc_neighbours(max_i: int, max_j: int, current: (int, int)) -> (int, int):
 
 
 def dijkstra(grid: List[List[int]]) -> int:
-    # queue = [(i, j) for j in range(len(grid)) for i in range(len(grid))]
     current = (0, 0)
     target = (len(grid)-1, len(grid[0])-1)
 
-    distances = [[maxsize] * len(grid[i]) for i in range(len(grid))]
-    distances[current[0]][current[1]] = 0
+    dist = [[maxsize] * len(grid[i]) for i in range(len(grid))]
+    dist[current[0]][current[1]] = 0
 
     queue: List[(int, (int, int))] = [(0, current)]
 
@@ -42,17 +41,17 @@ def dijkstra(grid: List[List[int]]) -> int:
 
     while len(queue) > 0:
         current = heapq.heappop(queue)[1]
-        current_distance = distances[current[0]][current[1]]
+        current_distance = dist[current[0]][current[1]]
 
         neighbours = filter(in_visited, calc_neighbours(len(grid), len(grid[0]), current))
         for n in neighbours:
-            if distances[n[0]][n[1]] > current_distance + grid[n[0]][n[1]]:
-                distances[n[0]][n[1]] = current_distance + grid[n[0]][n[1]]
-                heapq.heappush(queue, (distances[n[0]][n[1]], (n[0], n[1])))
+            if dist[n[0]][n[1]] > current_distance + grid[n[0]][n[1]]:
+                dist[n[0]][n[1]] = current_distance + grid[n[0]][n[1]]
+                heapq.heappush(queue, (dist[n[0]][n[1]], (n[0], n[1])))
 
         visited.add(current)
 
-    return distances[-1][-1]
+    return dist[-1][-1]
 
 
 def part1(input: str) -> int:
